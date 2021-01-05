@@ -2,7 +2,7 @@
 Containerized API Service for upload and retrieving systems metrics
 
 Overview:
-  The containerized API service that accepts a json object info about the sender host's CPU and memory utilization in percentage. Then it appends the sender's IP address.
+  The containerized API service that accepts a json object info about the sender host's CPU and memory utilization in percentage. Then it appends the sender's IP address. If another json object is recieved from the same host then the services just updates the cpu and memory utilization fields. The other service returns the list of system metrics based on the IP addresses.
 
 Tools Used:
   - Java
@@ -32,4 +32,4 @@ API endpoints:
 2. Data retrieval:
      Method: Get
      Use case example:
-         `curl -XGet -H "Content-Type: application/json" http://127.0.0.1:8080/report`
+         `curl -XGET -H "Content-Type: application/json" http://127.0.0.1:8080/report`
