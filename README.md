@@ -15,8 +15,8 @@ Running the container:
   `docker-compose up -d`
 
 Specifications:
- Exposed port: 8080
- docker volume path on host: ./metrics-data/
+ - Exposed port: 8080
+ - docker volume path on host: ./metrics-data/
 
 API endpoints:
   i) http://'host_address':8080/metrics
