@@ -1,0 +1,13 @@
+version: '3'
+services:
+  metrics-service-container:
+    image: metrics-service-container
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./env_file
+    build:
+      context: "./"
+      dockerfile: "Dockerfile"
+    volumes:
+      - ./metrics-data:/data/
