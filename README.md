@@ -25,12 +25,11 @@ API endpoints:
 1. Ingestion:
     Method: Post
     Use case example:
-      curl -XPOST -H "Content-Type: application/json" \
-      --data '{"percentage_cpu_used": 89, "percentage_memory_used": 87}' http://127.0.0.1:8080/metrics
+      `curl -XPOST -H "Content-Type: application/json" --data '{"percentage_cpu_used": 89, "percentage_memory_used": 87}' http://127.0.0.1:8080/metrics`
       
       **Note: use the same key as above while creating the json object**
  
 2. Data retrieval:
      Method: Get
      Use case example:
-        curl -XGet -H "Content-Type: application/json" http://127.0.0.1:8080/report
+         `curl -XGet -H "Content-Type: application/json" http://127.0.0.1:8080/report`
