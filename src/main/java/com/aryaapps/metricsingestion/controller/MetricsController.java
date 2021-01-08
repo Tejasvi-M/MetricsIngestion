@@ -1,10 +1,9 @@
 package com.aryaapps.metricsingestion.controller;
 
-import java.util.Map;
 
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.aryaapps.metricsingestion.dto.SystemMetrics;
 import com.aryaapps.metricsingestion.repository.MetricsRepository;
 import com.aryaapps.metricsingestion.services.ValidateRange;
@@ -32,17 +30,17 @@ public class MetricsController {
 	
 	
 	@PostMapping("/metrics")
-	public ResponseEntity<?> insertMetrics(@Valid @RequestBody Map<String,Integer> userData) {
+	public ResponseEntity<?> insertMetrics(@Valid @RequestBody Map<String,Float> userData) {
 		
 		SystemMetrics systemMetrics=new SystemMetrics();
 		String clientIP=httpServletRequest.getRemoteAddr();
-		int maxCpu=userData.get("percentage_cpu_used");
-		int maxMemory=userData.get("percentage_memory_used");
+		float maxCpu=userData.get("percentage_cpu_used");
+		float maxMemory=userData.get("percentage_memory_used");
+		
 		
 		if(!validateRange.validate(maxCpu)||!validateRange.validate(maxMemory)) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Range of Used CPU or Memory must be invalid. The correct range is 0-100");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Range of Used CPU or Memory must be invalid!! The correct range is 0-100");
 		}
-		
 		
 		systemMetrics.setIp(clientIP);
 		systemMetrics.setMaxCpu(maxCpu);
@@ -62,9 +60,19 @@ public class MetricsController {
 	
 	
 	@GetMapping("/report")
-	public ResponseEntity<?> getAllMetrics(){
+	public ResponseEntity<?> getHighestMetricsReports(){
 		try {
 			return  ResponseEntity.status(HttpStatus.OK).body(metricsRepository.returnMaxCpuAndMaxMemoryOfHosts());	
+		}catch(Exception ex) {
+			return new ResponseEntity<>(ex.getCause(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@GetMapping("/reportall")
+	public ResponseEntity<?> getAllMetricsReports(){
+		try {
+			return  ResponseEntity.status(HttpStatus.OK).body(metricsRepository.findAll());	
 		}catch(Exception ex) {
 			return new ResponseEntity<>(ex.getCause(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}

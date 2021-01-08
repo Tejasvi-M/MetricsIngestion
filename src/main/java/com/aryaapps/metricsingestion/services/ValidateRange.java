@@ -1,15 +1,16 @@
 package com.aryaapps.metricsingestion.services;
 
-import java.time.temporal.ValueRange;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class ValidateRange {
 
-	public boolean validate(int value) {
-		ValueRange range = java.time.temporal.ValueRange.of(0, 100);
-		return range.isValidIntValue(value);
+	public boolean validate(float value) {
+		if(0.0 <= value && value <= 100.0)
+		    return true;
+		else
+			return false;
 	}
 	
 }

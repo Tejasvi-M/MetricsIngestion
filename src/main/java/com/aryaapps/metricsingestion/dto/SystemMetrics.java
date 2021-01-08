@@ -1,10 +1,12 @@
 package com.aryaapps.metricsingestion.dto;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -12,31 +14,37 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
+@Table(name="system_metrics")
 public class SystemMetrics {
 	
-	private String ip;
-	private int maxCpu;
-	private int maxMemory;
 	private int id;
-
+	private String ip;
+	private float maxCpu;
+	private float maxMemory;
+	
 	public SystemMetrics(){}
-		
-	public SystemMetrics(String ip,int maxCpu, int maxMemory){
+	
+	public SystemMetrics(String ip,float maxCpu, float maxMemory){
 		this.maxCpu=maxCpu;
 		this.maxMemory=maxMemory;
 		this.ip=ip;
 	}
 	
+	
+
+
 	@Id
 	@JsonIgnore
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id",updatable = false, nullable=false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
-		this.id = id;
+		this.id =id;
 	}
+	
 	
 	@Column(name = "ip", nullable = false)
 	@JsonProperty(value="ip")
@@ -52,11 +60,11 @@ public class SystemMetrics {
 	@Min(value=0,message="Usage is in percentage, range 0-100")
 	@Max(value=100,message="Usage is in percentage, range 0-100")
 	@JsonProperty(value="max_cpu")
-	public int getMaxCpu() {
+	public float getMaxCpu() {
 		return maxCpu;
 	}
 	
-	public void setMaxCpu(int maxCpu) {
+	public void setMaxCpu(float maxCpu) {
 		this.maxCpu = maxCpu;
 	}
 	
@@ -64,11 +72,11 @@ public class SystemMetrics {
 	@Min(value=0,message="Usage is in percentage, range 0-100")
 	@Max(value=100,message="Usage is in percentage, range 0-100")
 	@JsonProperty(value="max_memory")
-	public int getMaxMemory() {
+	public float getMaxMemory() {
 		return maxMemory;
 	}
 	
-	public void setMaxMemory(int maxMemory) {
+	public void setMaxMemory(float maxMemory) {
 		this.maxMemory = maxMemory;
 	}
 }
