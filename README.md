@@ -4,7 +4,6 @@ Containerized API Service for upload and retrieving systems metrics
 Overview:
   The containerized API service that accepts a json object info about the sender host's CPU and memory utilization in percentage. Then it appends the sender's IP address. If another json object is recieved from the same host then the service returns the maximum value of the cpu and memory utilization fields. The other service returns the list of system metrics based on the IP addresses.
   
-  **Note: This code has been tested on ubuntu platform and temporarily hosted on 13.127.37.228** 
 
 Tools Used:
   - Java
